@@ -1,0 +1,36 @@
+<?php
+
+function mightyforms_register_block()
+{
+    wp_register_script(
+        'mightyforms_script_editor',
+        plugins_url() . '/mightyforms/gutenberg_block/mightyforms_block/blocks.build.js',
+        array('wp-blocks', 'wp-element', 'wp-components')
+    );
+
+    wp_register_style(
+        'mightyforms_style_editor',
+        plugins_url() . '/mightyforms/gutenberg_block/mightyforms_block/style_editor.css',
+        array('wp-edit-blocks')
+    );
+
+    register_block_type('mf/form-block', array(
+        'editor_script' => 'mightyforms_script_editor',
+        'editor_style' => 'mightyforms_style_editor',
+        'style' => 'mightyforms_style',
+    ));
+}
+
+add_action('init', 'mightyforms_register_block');
+
+
+function pass_params_to_wp_admin(){
+
+    wp_localize_script('mightyforms_script_editor', 'backendData', [
+        'gutenbergPluginRootFolder' => plugin_dir_url(__DIR__) . 'images/gutenberg_icon.jpg',
+        'mightyformsApiKey' => get_option('mightyforms_api_key')
+    ]);
+
+}
+
+add_action('admin_print_scripts', 'pass_params_to_wp_admin');

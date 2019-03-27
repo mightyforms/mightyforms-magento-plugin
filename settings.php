@@ -1,0 +1,73 @@
+<?php
+
+function set_user_api_key($api_key)
+{
+    global $wpdb;
+
+    $wpdb->insert('wp_options', ['option_name' => 'mightyforms_api_key', 'option_value' => esc_sql($api_key)]);
+}
+
+function update_user_api_key($new_api_key)
+{
+    global $wpdb;
+
+    $wpdb->update('wp_options', ['option_value' => esc_sql($new_api_key)], ['option_name' => 'mightyforms_api_key']);
+
+}
+
+function run_mightyforms_settings()
+{
+    $new_key = isset($_POST['key']) ? $_POST['key'] : null;
+
+    $get_user_api_key = get_option('mightyforms_api_key');
+
+    if ($new_key && strlen($new_key) > 0) {
+        if ($get_user_api_key) {
+            update_user_api_key($new_key);
+        } else {
+            set_user_api_key($new_key);
+        }
+        $get_user_api_key = $new_key;
+    } else {
+        // If user pass empty string - it's mean that he wants to delete his key.
+        delete_option('mightyforms_api_key');
+    }
+    ?>
+
+    <div class="mf-main-block">
+        <div class="row logo-section">
+            <img src="https://app.mightyforms.com/dist/assets/img/logo.svg" alt="">
+        </div>
+        <div class="settings-page">
+
+            <?php
+
+            if ($get_user_api_key) {
+                ?>
+
+                <form action="" method="post">
+                    <div>This is your API key. If you reset your key on website - please, don't forget to paste here
+                        your new key.
+                    </div>
+                    <input type="text" name="key" value="<?= $get_user_api_key ?>">
+                    <input type="submit" value="Update key">
+                </form>
+
+                <?php
+            } else {
+                ?>
+
+                <form action="" method="post">
+                    <div>Before you start, you need to paste here your API key</div>
+                    <input type="text" name="key" value="<?= $new_key ?>">
+                    <input type="submit" value="Save key">
+                </form>
+
+                <?php
+            }
+            ?>
+        </div>
+    </div>
+    <?php
+
+}
