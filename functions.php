@@ -1,18 +1,16 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: Sanchoss
- * Date: 3/12/19
- * Time: 09:57
+ * @author DemonIa sanchoclo@gmail.com
+ * @function RemotePageGet
+ * @description This is wrapper for cURL. Needed for requesting data from server
+ * (in our case, it's users forms list)
  * @param $url
  * @param $referer
  * @param int $POST
  * @param string $POSTFIELDS
- * @param bool $headers
- * @return array
+ * @return bool|string
  */
-
-
 function RemotePageGet($url, $referer, $POST = 0, $POSTFIELDS='') {
     global $agent, $cookie_file_path;
     $browser = curl_init();

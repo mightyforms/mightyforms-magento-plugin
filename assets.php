@@ -8,6 +8,13 @@
 
 include ('gutenberg_block/init.php');
 
+/**
+ * @author DemonIa sanchoclo@gmail.com
+ * @function admin_load_assets
+ * @description Needed for include plugin .js and .css files.
+ * @param
+ * @returns void
+ */
 function admin_load_assets()
 {
     wp_enqueue_script('datatables_js', 'https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js');

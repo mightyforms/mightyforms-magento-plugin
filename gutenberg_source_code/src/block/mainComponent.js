@@ -6,12 +6,6 @@ import DropdownComponent from './dropdownComponent';
 const {registerBlockType} = wp.blocks;
 const blockName = 'cgb/block-mightyforms';
 
-function getData(){
-	return new Promise((resolve, reject) => {
-
-	})
-}
-
 registerBlockType(blockName, {
 
 	title: 'MightyForms',
@@ -41,23 +35,23 @@ registerBlockType(blockName, {
 
 		render() {
 
-					fetch(`http://localhost:3000/api/v1/${backendData.mightyformsApiKey}/forms`)
-						.then(response => response.json())
-						.then(response => {
+			fetch(`http://localhost:3000/api/v1/${backendData.mightyformsApiKey}/forms`)
+				.then(response => response.json())
+				.then(response => {
 
-							let responseData = response['data'];
-							window.userFormsData = responseData;
-							this.setState({
-								userFormsData: responseData
-							})
-						});
+					let responseData = response['data'];
+					window.userFormsData = responseData;
+					this.setState({
+						userFormsData: responseData
+					})
+				});
 
 			return (
 
-					<DropdownComponent
-						userForms={this.state.userFormsData}
-						selectedFormId={this.state.selectedFormId}
-						setFormSelection={this.setFormSelection}/>
+				<DropdownComponent
+					userForms={this.state.userFormsData}
+					selectedFormId={this.state.selectedFormId}
+					setFormSelection={this.setFormSelection}/>
 			);
 		}
 	},

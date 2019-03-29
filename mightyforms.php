@@ -19,6 +19,14 @@ require_once('settings.php');
 // Set plugin label in main WordPress menu
 add_action('admin_menu', 'mightyforms_register_admin_settings');
 
+
+/**
+ * @author DemonIa sanchoclo@gmail.com
+ * @function mightyforms_register_admin_settings
+ * @description Register menu and submenu items in Wordpress.
+ * @param
+ * @returns void
+ */
 function mightyforms_register_admin_settings()
 {
     add_menu_page('MightyForms', 'MightyForms', 'manage_options', 'mightyforms', 'mightyforms_admin_iframe', plugins_url('/images/icon.png', __FILE__), 6);
@@ -26,7 +34,13 @@ function mightyforms_register_admin_settings()
     add_submenu_page('mightyforms', 'Settings', 'Settings', 'manage_options', 'mightyforms-settings', 'run_mightyforms_settings');
 }
 
-
+/**
+ * @author DemonIa sanchoclo@gmail.com
+ * @function garbage_collector
+ * @description Remove user api key after plugin was uninstalled.
+ * @param
+ * @returns void
+ */
 function garbage_collector()
 {
     delete_option('mightyforms_api_key');
@@ -34,6 +48,15 @@ function garbage_collector()
 
 register_uninstall_hook(__FILE__, 'garbage_collector');
 
+
+/**
+ * @author DemonIa sanchoclo@gmail.com
+ * @function mightyforms_admin_iframe
+ * @description Render main plugin page, that contain
+ * forms list and Mightyforms application (in tabs)
+ * @param
+ * @returns void
+ */
 function mightyforms_admin_iframe()
 {
     $redirect_url = get_site_url() . '/wp-admin/admin.php?page=mightyforms-settings';

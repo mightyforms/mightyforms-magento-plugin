@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @author DemonIa sanchoclo@gmail.com
+ * @function mightyforms_register_block
+ * @description Needed for including .js and .css files of Gutenberg plugin
+ * @param
+ * @return void
+ */
 function mightyforms_register_block()
 {
     wp_register_script(
@@ -23,7 +30,13 @@ function mightyforms_register_block()
 
 add_action('init', 'mightyforms_register_block');
 
-
+/**
+ * @author DemonIa sanchoclo@gmail.com
+ * @function pass_params_to_wp_admin
+ * @description In this way, I've pass variables from php to js.
+ * @param
+ * @return void
+ */
 function pass_params_to_wp_admin(){
 
     wp_localize_script('mightyforms_script_editor', 'backendData', [

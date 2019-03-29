@@ -1,11 +1,26 @@
 <?php
 
+/**
+ * @author DemonIa sanchoclo@gmail.com
+ * @function update_user_api_key
+ * @description Needed for set user api key in database
+ * @param
+ * @returns void
+ */
 function set_user_api_key($api_key)
 {
     global $wpdb;
 
     $wpdb->insert('wp_options', ['option_name' => 'mightyforms_api_key', 'option_value' => esc_sql($api_key)]);
 }
+
+/**
+ * @author DemonIa sanchoclo@gmail.com
+ * @function update_user_api_key
+ * @description Needed for updating user api key in database
+ * @param
+ * @returns void
+ */
 
 function update_user_api_key($new_api_key)
 {
@@ -14,6 +29,14 @@ function update_user_api_key($new_api_key)
     $wpdb->update('wp_options', ['option_value' => esc_sql($new_api_key)], ['option_name' => 'mightyforms_api_key']);
 
 }
+
+/**
+ * @author DemonIa sanchoclo@gmail.com
+ * @function run_mightyforms_settings
+ * @description <Fire when user go to "/settings" page>
+ * @param
+ * @returns void
+ */
 
 function run_mightyforms_settings()
 {
