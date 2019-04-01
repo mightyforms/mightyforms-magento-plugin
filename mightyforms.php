@@ -1,12 +1,29 @@
 <?php
+
 /*
-Plugin Name: MightyForms
-Plugin URI: http://страница_с_описанием_плагина_и_его_обновлений
-Description: Create online forms and surveys like never before.
-Version: 1.0
-Author: MightyForm Corp.
-Author URI: http://dkrok.com
+    Plugin Name: MightyForms
+    Description: Create online forms and surveys like never before.
+    Version: 1.0
+    Author: MightyForm Corp.
+    Author URI: http://dkrok.com
+
+     Copyright 2019 MightyForm Corp. (email: E-MAIL_АВТОРА)
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -115,8 +132,8 @@ function mightyforms_admin_iframe()
                         <tr>
                             <td><?= $forms['project_name'] ?></td>
                             <td> [mightyforms id="<?= $forms['project_id'] ?>"]</td>
-                            <td> <?= $forms['last_modified_username'] ?></td>
-                            <td> <?= $forms['last_modified'] ?></td>
+                            <td> <?= isset($forms['last_modified_username']) ? $forms['last_modified_username'] : '' ?></td>
+                            <td> <?= isset($forms['last_modified']) ? $forms['last_modified'] : '' ?></td>
                         </tr>
                         <?php
                     }
