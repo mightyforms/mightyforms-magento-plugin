@@ -20,7 +20,7 @@ registerBlockType(blockName, {
 				userFormsData: [],
 				isBlockAddedFlag: false,
 				selectedFormId: null,
-				test: null
+				waitForContent: true
 			}
 		}
 
@@ -33,32 +33,74 @@ registerBlockType(blockName, {
 		 * So, first of all we get data from API, and then - render result.
 		 */
 
+		componentDidMount() {
+
+			if (backendData.mightyformsApiKey !== null) {
+
+				fetch(`http://localhost:3000/api/v1/${backendData.mightyformsApiKey}/forms`)
+					.then(response => response.json())
+					.then(response => {
+
+						console.log('response', response);
+						if (response['success'] === true) {
+							let responseData = response['data'];
+							window.userFormsData = responseData;
+							this.setState({
+								userFormsData: responseData,
+								waitForContent: false
+							});
+						} else {
+							//If API key is wrong, we should resume execution.
+							//So, let's set waitForContent: false, and user will see message about wrong key;
+							this.setState({waitForContent: false});
+						}
+					});
+			} else {
+				this.setState({
+					waitForContent: false
+				})
+			}
+		}
+
 		render() {
 
-			fetch(`http://localhost:3000/api/v1/${backendData.mightyformsApiKey}/forms`)
-				.then(response => response.json())
-				.then(response => {
+			if (this.state.waitForContent === true) {
+				return (<div className="mightyforms-container">
+					<h5 className="loading">Loading...</h5>
+				</div>);
+			} else {
 
-					let responseData = response['data'];
-					window.userFormsData = responseData;
-					this.setState({
-						userFormsData: responseData
-					})
-				});
+				if (this.state.userFormsData.length > 0) {
 
-			return (
+					return (
 
-				<DropdownComponent
-					userForms={this.state.userFormsData}
-					selectedFormId={this.state.selectedFormId}
-					setFormSelection={this.setFormSelection}/>
-			);
+						<DropdownComponent
+							userForms={this.state.userFormsData}
+							selectedFormId={this.state.selectedFormId}
+							setFormSelection={this.setFormSelection}/>
+					);
+
+				} else {
+
+					return (
+						<div className="mightyforms-container">
+							<div className="mf-title"><img src={backendData.gutenbergPluginRootFolder}/> MightyForms
+							</div>
+
+							<div>API key is wrong, or it's not set up. Please, check your API key on plugin&nbsp;
+								<a href={backendData.settingPageUrl}>settings page</a>
+							</div>
+						</div>
+					);
+				}
+			}
 		}
 	},
 
 	save: class extends Component {
 
 		render() {
+			// console.log()
 			return (
 				<iframe
 					src={`https://app.mightyforms.com/form/${this.props.attributes.selectedFormId}/design`}

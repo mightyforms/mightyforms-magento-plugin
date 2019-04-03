@@ -51,7 +51,8 @@ function run_mightyforms_settings()
             set_user_api_key($new_key);
         }
         $get_user_api_key = $new_key;
-    } else {
+    }
+    else {
         // If user pass empty string - it's mean that he wants to delete his key.
         delete_option('mightyforms_api_key');
     }
@@ -81,7 +82,7 @@ function run_mightyforms_settings()
                 ?>
 
                 <form action="" method="post">
-                    <div>Before you start, you need to paste here your API key</div>
+                    <div>Before you start, you need to paste here your API key.</div>
                     <input type="text" name="key" value="<?= $new_key ?>">
                     <input type="submit" value="Save key">
                 </form>

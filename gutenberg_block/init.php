@@ -40,8 +40,9 @@ add_action('init', 'mightyforms_register_block');
 function pass_params_to_wp_admin(){
 
     wp_localize_script('mightyforms_script_editor', 'backendData', [
-        'gutenbergPluginRootFolder' => plugin_dir_url(__DIR__) . 'images/gutenberg_icon.jpg',
-        'mightyformsApiKey' => get_option('mightyforms_api_key')
+        'gutenbergPluginRootFolder' => plugin_dir_url(__DIR__) . 'images/gutenberg_icon.png',
+        'mightyformsApiKey' => get_option('mightyforms_api_key') ? get_option('mightyforms_api_key') : null,
+        'settingPageUrl' => get_admin_url(null, 'admin.php?page=mightyforms-settings')
     ]);
 
 }

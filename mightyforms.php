@@ -24,10 +24,6 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 require_once('functions.php');
 require_once('shortcode.php');
 require_once('assets.php');
@@ -76,7 +72,7 @@ register_uninstall_hook(__FILE__, 'garbage_collector');
  */
 function mightyforms_admin_iframe()
 {
-    $redirect_url = get_site_url() . '/wp-admin/admin.php?page=mightyforms-settings';
+    $redirect_url = get_admin_url(null, 'admin.php?page=mightyforms-settings');
 
     $raw_user_forms = RemotePageGet('http://localhost:3000/api/v1/' . get_option('mightyforms_api_key') . '/forms', '', false, '');
 
@@ -99,12 +95,11 @@ function mightyforms_admin_iframe()
 
             <?php
 
-            if (!$user_forms) {
-                echo '<h4>You have not set your API key </h4>';
+            if (! $user_forms['success']) {
 
-            } elseif (isset($user_forms['error_code']) && $user_forms['error_code'] === 4) {
-                echo '<h4>Looks like your API key is incorrect. Go to <a href="' . $redirect_url . '">settings</a></h4>';
-            } elseif (count($user_forms['data']) < 1) {
+                echo '<h4>You have not set your API key or your key is incorrect. Go to <a href="' . $redirect_url . '">settings</a></h4>';
+
+            } elseif (isset($user_forms) && $user_forms['success'] && count($user_forms['data']) < 1) {
 
                 echo '<h4>You have not created form yet </h4>';
 

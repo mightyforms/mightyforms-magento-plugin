@@ -2,10 +2,10 @@ import React from 'react'
 
 class DropdownComponent extends React.Component {
 
-	render () {
+	render() {
 		let userForms = this.props.userForms;
 
-		let options = userForms.map((post, index)=> {
+		let options = userForms.map((post, index) => {
 
 			if (index === 0) {
 				return (<option key={index} value="" disabled="disabled" selected="true">-- Select your form --</option>);
@@ -17,12 +17,13 @@ class DropdownComponent extends React.Component {
 
 		return (
 			<div className="mightyforms-container">
-				<p>Select needed form from dropdown, and it will be shown on this page</p>
+				<div className="mf-title"><img src={backendData.gutenbergPluginRootFolder} /> MightyForms</div>
+				<div>Select needed form from dropdown, and it will be shown on this page</div>
 
 				<select value={this.props.selectedFormId}
-					onChange={(event) => {
-						this.props.setFormSelection(event.target.querySelector('option:checked').value)
-					}}
+						onChange={(event) => {
+							this.props.setFormSelection(event.target.querySelector('option:checked').value)
+						}}
 				>
 					{options}
 				</select>
