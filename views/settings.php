@@ -10,8 +10,8 @@
 function set_user_api_key($api_key)
 {
     global $wpdb;
-
-    $wpdb->insert('wp_options', ['option_name' => 'mightyforms_api_key', 'option_value' => esc_sql($api_key)]);
+    $wp_options = $wpdb->prefix . 'options';
+    $wpdb->insert($wp_options, ['option_name' => 'mightyforms_api_key', 'option_value' => esc_sql($api_key)]);
 }
 
 /**
@@ -25,8 +25,8 @@ function set_user_api_key($api_key)
 function update_user_api_key($new_api_key)
 {
     global $wpdb;
-
-    $wpdb->update('wp_options', ['option_value' => esc_sql($new_api_key)], ['option_name' => 'mightyforms_api_key']);
+    $wp_options = $wpdb->prefix . 'options';
+    $wpdb->update($wp_options, ['option_value' => esc_sql($new_api_key)], ['option_name' => 'mightyforms_api_key']);
 
 }
 
@@ -44,7 +44,7 @@ function run_mightyforms_settings()
 
     $get_user_api_key = get_option('mightyforms_api_key');
 
-    if ($new_key && strlen($new_key) > 0) {
+    if ($new_key !== null && strlen($new_key) > 0) {
         if ($get_user_api_key) {
             update_user_api_key($new_key);
         } else {
@@ -52,17 +52,15 @@ function run_mightyforms_settings()
         }
         $get_user_api_key = $new_key;
     }
-    else {
-        // If user pass empty string - it's mean that he wants to delete his key.
-        delete_option('mightyforms_api_key');
-    }
     ?>
 
     <div class="mf-main-block">
-        <div class="row logo-section">
-            <img src="https://app.mightyforms.com/dist/assets/img/logo.svg" alt="">
+        <div class="row mf-header">
+            <div class="container">
+                <img src="https://dev.mightyforms.com/dist/assets/img/logo.svg">
+            </div>
         </div>
-        <div class="settings-page">
+        <div class="settings-page container">
 
             <?php
 

@@ -7,6 +7,9 @@
  * @param
  * @return void
  */
+
+
+
 function mightyforms_register_block()
 {
     wp_register_script(
@@ -25,10 +28,16 @@ function mightyforms_register_block()
         'editor_script' => 'mightyforms_script_editor',
         'editor_style' => 'mightyforms_style_editor',
         'style' => 'mightyforms_style',
+        'render_callback' => 'backend_render',
     ));
 }
 
 add_action('init', 'mightyforms_register_block');
+
+function backend_render($attributes){
+    var_dump($attributes);
+    return '<h1>This is server says</h1>';
+}
 
 /**
  * @author DemonIa sanchoclo@gmail.com

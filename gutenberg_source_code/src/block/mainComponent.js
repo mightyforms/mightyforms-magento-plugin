@@ -97,18 +97,22 @@ registerBlockType(blockName, {
 		}
 	},
 
-	save: class extends Component {
+	save: function () {
+		return null
+	}
 
-		render() {
-			// console.log()
-			return (
-				<iframe
-					src={`https://app.mightyforms.com/form/${this.props.attributes.selectedFormId}/design`}
-					width="100%"
-					height="400px"
-					frameBorder="0">
-				</iframe>
-			);
-		}
-	},
+	// save: class extends Component {
+	//
+	// 	render() {
+	// 		// console.log()
+	// 		return (
+	// 			<iframe
+	// 				src={`https://dev.mightyforms.com/form/${this.props.attributes.selectedFormId}/design`}
+	// 				width="100%"
+	// 				height="400px"
+	// 				frameBorder="0">
+	// 			</iframe>
+	// 		);
+	// 	}
+	// },
 });

@@ -3,12 +3,14 @@ import React from 'react'
 class DropdownComponent extends React.Component {
 
 	render() {
+
 		let userForms = this.props.userForms;
+
 
 		let options = userForms.map((post, index) => {
 
 			if (index === 0) {
-				return (<option key={index} value="" disabled="disabled" selected="true">-- Select your form --</option>);
+				return (<option key={index} selected="true" value={post.project_id}>{post.project_name}</option>);
 			}
 
 			return (<option key={index} value={post.project_id}>{post.project_name}</option>);
