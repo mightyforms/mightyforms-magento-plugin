@@ -1,5 +1,9 @@
 <?php
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 /**
  * @author DemonIa sanchoclo@gmail.com
  * @function mightyforms_register_block
@@ -8,13 +12,12 @@
  * @return void
  */
 
-
-
 function mightyforms_register_block()
 {
     wp_register_script(
         'mightyforms_script_editor',
         plugins_url() . '/mightyforms/gutenberg_block/mightyforms_block/blocks.build.js',
+//        plugins_url() . '/mightyforms/gutenberg_source_code/dist/blocks.build.js',
         array('wp-blocks', 'wp-element', 'wp-components')
     );
 
@@ -27,17 +30,11 @@ function mightyforms_register_block()
     register_block_type('mf/form-block', array(
         'editor_script' => 'mightyforms_script_editor',
         'editor_style' => 'mightyforms_style_editor',
-        'style' => 'mightyforms_style',
-        'render_callback' => 'backend_render',
+        'style' => 'mightyforms_style'
     ));
 }
 
 add_action('init', 'mightyforms_register_block');
-
-function backend_render($attributes){
-    var_dump($attributes);
-    return '<h1>This is server says</h1>';
-}
 
 /**
  * @author DemonIa sanchoclo@gmail.com

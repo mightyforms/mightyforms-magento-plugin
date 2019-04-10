@@ -4,23 +4,27 @@ import React, {Component} from 'react';
 import DropdownComponent from './dropdownComponent';
 
 const {registerBlockType} = wp.blocks;
-const blockName = 'cgb/block-mightyforms';
+const blockName = 'mf/form-block';
 
 registerBlockType(blockName, {
 
 	title: 'MightyForms',
 	icon: <img src={backendData.gutenbergPluginRootFolder} width="20" height="20" alt=""/>,
 	category: 'common',
-	attributes: {},
+	attributes: {
+		selectedFormId: {
+			type: String,
+			default: ''
+		}
+	},
 	edit: class extends Component {
 
-		constructor() {
-			super();
+		constructor(props) {
+			super(props);
 			this.state = {
 				userFormsData: [],
 				isBlockAddedFlag: false,
-				selectedFormId: null,
-				waitForContent: true
+				waitForContent: true,
 			}
 		}
 
@@ -37,17 +41,21 @@ registerBlockType(blockName, {
 
 			if (backendData.mightyformsApiKey !== null) {
 
+
 				fetch(`http://localhost:3000/api/v1/${backendData.mightyformsApiKey}/forms`)
 					.then(response => response.json())
 					.then(response => {
 
-						console.log('response', response);
 						if (response['success'] === true) {
 							let responseData = response['data'];
-							window.userFormsData = responseData;
+
+							if (this.props.attributes.selectedFormId === '') {
+								this.props.attributes.selectedFormId = responseData[0]['project_id']
+							}
+
 							this.setState({
 								userFormsData: responseData,
-								waitForContent: false
+								waitForContent: false,
 							});
 						} else {
 							//If API key is wrong, we should resume execution.
@@ -71,12 +79,11 @@ registerBlockType(blockName, {
 			} else {
 
 				if (this.state.userFormsData.length > 0) {
-
 					return (
 
 						<DropdownComponent
 							userForms={this.state.userFormsData}
-							selectedFormId={this.state.selectedFormId}
+							selectedFormId={this.props.attributes.selectedFormId}
 							setFormSelection={this.setFormSelection}/>
 					);
 
@@ -97,22 +104,16 @@ registerBlockType(blockName, {
 		}
 	},
 
-	save: function () {
-		return null
-	}
-
-	// save: class extends Component {
-	//
-	// 	render() {
-	// 		// console.log()
-	// 		return (
-	// 			<iframe
-	// 				src={`https://dev.mightyforms.com/form/${this.props.attributes.selectedFormId}/design`}
-	// 				width="100%"
-	// 				height="400px"
-	// 				frameBorder="0">
-	// 			</iframe>
-	// 		);
-	// 	}
-	// },
+	save: class extends Component {
+		render() {
+			return (
+				<iframe
+					src={`https://dev.mightyforms.com/form/${this.props.attributes.selectedFormId}/design`}
+					width="100%"
+					height="400px"
+					frameBorder="0">
+				</iframe>
+			);
+		}
+	},
 });

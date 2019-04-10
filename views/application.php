@@ -18,7 +18,7 @@
 function run_mightyforms_application()
 {
    ?>
-    <div class="container mf-main-block">
+    <div class="mf-main-block">
         <div class="application-box">
             <iframe id="mf" src="https://dev.mightyforms.com" frameborder="0"
                     style="width: 100%;"></iframe>
