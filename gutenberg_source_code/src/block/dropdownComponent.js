@@ -9,7 +9,6 @@ class DropdownComponent extends React.Component {
 		let options = userForms.map((post, index) => {
 
 			if(post.project_id === this.props.selectedFormId) {
-				console.log('Match!')
 				return (<option key={index} selected="selected" value={post.project_id}>{post.project_name}</option>);
 			}
 

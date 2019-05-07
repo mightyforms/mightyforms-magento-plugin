@@ -1,9 +1,9 @@
 .mf-main-block {
-    margin-top: 15px;
-    margin-left: 2px;
-    margin-right: 20px;
+    /* margin-top: 15px; */
+    margin-left: -20px;
+    margin-right: 0;
     background: #f0f2f7;
-    /*min-height: 1000px;*/
+    /* min-height: 1000px; */
     overflow: hidden;
 }
 

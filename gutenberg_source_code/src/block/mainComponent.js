@@ -41,8 +41,7 @@ registerBlockType(blockName, {
 
 			if (backendData.mightyformsApiKey !== null) {
 
-
-				fetch(`http://localhost:3000/api/v1/${backendData.mightyformsApiKey}/forms`)
+				fetch(`https://dev.mightyforms.com/api/v1/${backendData.mightyformsApiKey}/forms`)
 					.then(response => response.json())
 					.then(response => {
 
