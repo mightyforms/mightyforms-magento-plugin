@@ -45,12 +45,12 @@ function run_mightyforms_forms()
                 <tr>
                     <td>Form name</td>
                     <td>Shortcode</td>
-                    <td>Why was latest editor?</td>
+                    <td>Last editor</td>
                     <td>Last modified</td>
                 </tr>
                 <h3>Your forms and shortcodes.</h3>
-                <p>If you want to show your form in page or post - just copy string in column right, and paste
-                    into your visual editor. That's is!</p>
+                <p>If you want to show your form in a page or post - just copy the form's shortcode and paste it into your
+                    visual editor. That's it!</p>
                 </thead>
                 <tbody>
 

@@ -68,9 +68,7 @@ function run_mightyforms_settings()
                 ?>
 
                 <form action="" method="post">
-                    <div>This is your API key. If you reset your key on website - please, don't forget to paste here
-                        your new key.
-                    </div>
+                    <div>This is your API key. If you reset your key on website - please, don't forget to paste your new key here.</div>
                     <input type="text" name="key" value="<?= $get_user_api_key ?>">
                     <input type="submit" value="Update key">
                 </form>
