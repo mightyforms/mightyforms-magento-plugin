@@ -1,5 +1,5 @@
 <?php
-namespace Porthas\MightyForms\Controller\Adminhtml\Application;
+namespace Porthas\MightyForms\Controller\Adminhtml\Forms;
 
 class Index extends \Magento\Backend\App\Action
 {
@@ -23,7 +23,7 @@ class Index extends \Magento\Backend\App\Action
     }
 
     /**
-     * Load the page defined in view/adminhtml/layout/porthas_mightyforms_application_index.xml
+     * Load the page defined in view/adminhtml/layout/porthas_mightyforms_forms_index.xml
      *
      * @return \Magento\Framework\View\Result\Page
      */

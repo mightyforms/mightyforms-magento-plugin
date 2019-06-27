@@ -1,0 +1,91 @@
+<script>
+
+    // define(['Porthas_MightyForms/js/dataTables.min']);
+
+    require([
+        'jquery',
+        'Porthas_MightyForms/js/dataTables.min'
+    ], function ($) {
+        $(document).ready(function () {
+            jQuery('#user_forms').DataTable();
+
+            $('#mightyforms').css('height', $(window).height());
+
+            $(window).on('message', function (e) {
+
+                let rawData = e.originalEvent.data;
+
+                try {
+                    if (typeof rawData !== 'string') return;
+
+                    let post = JSON.parse(rawData);
+
+                    if ('userApiKey' === post.message) {
+                        // $.post(
+                        //     ajaxurl, {
+                        //         action: 'upsert_user_api_key',
+                        //         userApiKey: post.data
+                        //     }, function (response) {
+                        //         if (!response.success) {
+                        //             alert(response.message)
+                        //         }
+                        //     });
+                    }
+                } catch (err) {
+                    console.error(err);
+                }
+            });
+        });
+    })
+</script>
+
+<?php
+
+$forms_block = $block
+    ->getLayout()
+    ->createBlock('Porthas\MightyForms\Block\Adminhtml\Forms');
+
+
+$user_api_key = $forms_block->getUserApiKey();
+
+$user_forms_json = $forms_block->getFormsList($user_api_key);
+
+$user_forms_array = json_decode($user_forms_json, true);
+
+if (!$user_forms_array['success']) {
+
+    echo '<h4>Unknown error occurred </h4>';
+
+} elseif (isset($user_forms_array) && $user_forms_array['success'] && count($user_forms_array['data']) < 1) {
+
+    echo '<h4>You have not created form yet </h4>';
+
+} else { ?>
+
+    <table id="user_forms" class="display">
+        <thead>
+        <tr>
+            <td>Form name</td>
+            <td>Shortcode</td>
+            <td>Last editor</td>
+            <td>Last modified</td>
+        </tr>
+        <h3>Your forms and shortcodes.</h3>
+        <p>If you want to show your form in a page or post - just copy the form's shortcode and paste it into your
+            visual editor. That's it!</p>
+        </thead>
+        <tbody>
+
+        <?php foreach ($user_forms_array['data'] as $forms) { ?>
+            <tr>
+                <td><?= $forms['project_name'] ?></td>
+                <td> [mightyforms id="mf-<?= $forms['project_id'] ?>"]</td>
+                <td> <?= isset($forms['last_modified_username']) ? $forms['last_modified_username'] : '' ?></td>
+                <td> <?= isset($forms['last_modified']) ? $forms['last_modified'] : '' ?></td>
+            </tr>
+        <?php } ?>
+
+        </tbody>
+    </table>
+
+<?php } ?>
