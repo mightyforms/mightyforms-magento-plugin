@@ -1,9 +1,7 @@
 <?php
 
 /**
- * @var \Porthas\MightyForms\Block\Display $block
+ * @var \Porthas\MightyForms\Block\EmbededBlock $block
  */
 
-echo '12345 - form';
-
-echo '<h4>' . $block->sayHello() . '</h4>';
+echo $block->renderForm();

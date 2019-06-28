@@ -51,7 +51,7 @@ if (!$user_forms_array['success']) {
         <?php foreach ($user_forms_array['data'] as $forms) { ?>
             <tr>
                 <td><?= $forms['project_name'] ?></td>
-                <td> [mightyforms id="mf-<?= $forms['project_id'] ?>"]</td>
+                <td> {{block class="Porthas\MightyForms\Block\EmbededBlock" name="render_form" form_id="<?php echo 'mf-' . $forms['project_id'];?>" template="Porthas_MightyForms::form.phtml"}}</td>
                 <td> <?= isset($forms['last_modified_username']) ? $forms['last_modified_username'] : '' ?></td>
                 <td> <?= isset($forms['last_modified']) ? $forms['last_modified'] : '' ?></td>
             </tr>
