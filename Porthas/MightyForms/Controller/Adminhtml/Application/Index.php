@@ -31,8 +31,4 @@ class Index extends \Magento\Backend\App\Action
     {
         return  $resultPage = $this->resultPageFactory->create();
     }
-
-    public function saveApiKey(){
-        echo 'This is target method';
-    }
 }

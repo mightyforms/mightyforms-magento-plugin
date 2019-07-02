@@ -3,65 +3,22 @@
 namespace Porthas\MightyForms\Controller\Adminhtml\Apikey;
 
 
-use Magento\Framework\App\Action\Action;
-use Magento\Framework\App\Action\Context;
-use Magento\Framework\Controller\Result\JsonFactory;
-use Magento\Framework\View\Result\PageFactory;
-
-
-class Index extends Action
+class Index extends \Magento\Backend\App\Action
 {
+    protected $resultPageFactory;
 
-    /**
-     * @var PageFactory
-     */
-    protected $_resultPageFactory;
-
-    /**
-     * @var JsonFactory
-     */
-    protected $_resultJsonFactory;
-
-
-    /**
-     * View constructor.
-     * @param Context $context
-     * @param PageFactory $resultPageFactory
-     * @param JsonFactory $resultJsonFactory
-     */
-    public function __construct(Context $context, PageFactory $resultPageFactory, JsonFactory $resultJsonFactory)
-    {
-
-        $this->_resultPageFactory = $resultPageFactory;
-        $this->_resultJsonFactory = $resultJsonFactory;
-
+    public function __construct(
+        \Magento\Backend\App\Action\Context $context,
+        \Magento\Framework\Controller\Result\JsonFactory $resultPageFactory
+    ) {
         parent::__construct($context);
+        $this->resultPageFactory = $resultPageFactory;
     }
 
-
-    /**
-     * @return \Magento\Framework\Controller\Result\Json
-     */
     public function execute()
     {
-        $result = $this->_resultJsonFactory->create();
-        $resultPage = $this->_resultPageFactory->create();
-        $currentProductId = $this->getRequest()->getParam('currentproduct');
-
-echo $currentProductId;
-
-        return $currentProductId;
+        if($this->getRequest()->isAjax()){
+            echo '{"some_key": "some_value"}';
+        }
     }
-
-    public function save()
-    {
-        $result = $this->_resultJsonFactory->create();
-        $resultPage = $this->_resultPageFactory->create();
-        $currentProductId = $this->getRequest()->getParam('currentproduct');
-
-        echo $currentProductId;
-
-        return $currentProductId;
-    }
-
 }
