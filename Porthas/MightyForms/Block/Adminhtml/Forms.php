@@ -24,7 +24,7 @@ class Forms extends Template
         }
 
         $client = $this->_httpClientFactory->create();
-        $client->setUri('http://localhost:3000/api/v1/mf/' . $apiKeyFromDb . '/forms');
+        $client->setUri('https://app.mightyforms.com/api/v1/mf/' . $apiKeyFromDb . '/forms');
         $client->setMethod(\Zend_Http_Client::GET);
 
         $response = $client->request();
