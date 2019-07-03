@@ -13,6 +13,9 @@ class Index extends \Magento\Backend\App\Action
         parent::__construct($context);
     }
 
+    /**
+     * @return array
+     */
     private static function getConnectionWithAttributes()
     {
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
@@ -23,6 +26,10 @@ class Index extends \Magento\Backend\App\Action
         return ['connection' => $connection, 'table_name' => $tableName];
     }
 
+    /** This functoin called from frontend via ajax,
+     *  and pass api_key from iFrame (postMessage) to DB
+     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|void
+     */
     public function execute()
     {
         if ($this->getRequest()->isAjax()) {
@@ -30,6 +37,7 @@ class Index extends \Magento\Backend\App\Action
             if ($this->getRequest()->getParam('apiKey')) {
 
                 $rawUserApiKey = $this->getRequest()->getParam('apiKey');
+                // clean, escape and trim user Api key before insert into DB.
                 $userApiKey = htmlspecialchars(trim(addslashes($rawUserApiKey)));
 
                 $connectionWithAttrs = self::getConnectionWithAttributes();
@@ -40,9 +48,11 @@ class Index extends \Magento\Backend\App\Action
         }
     }
 
+    /**
+     * @return bool|mixed
+     */
     public static function getUserApiKey()
     {
-
         $connectionWithAttrs = self::getConnectionWithAttributes();
 
         $result = $connectionWithAttrs['connection']

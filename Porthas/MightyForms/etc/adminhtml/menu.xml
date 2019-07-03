@@ -6,7 +6,7 @@
              title="MightyForms"
              module="Porthas_MightyForms"
              sortOrder="15"
-             resource="Porthas_MightyForms::helloworld"
+             resource="Porthas_MightyForms::resource"
         />
 
         <add id="Porthas_MightyForms::application"
@@ -14,7 +14,7 @@
              module="Porthas_MightyForms"
              sortOrder="9"
              parent="Porthas_MightyForms::MightyForms"
-             resource="Porthas_MightyForms::helloworld"
+             resource="Porthas_MightyForms::resource"
              action="porthas_mightyforms/application"
         />
 
@@ -23,7 +23,7 @@
              module="Porthas_MightyForms"
              sortOrder="10"
              parent="Porthas_MightyForms::MightyForms"
-             resource="Porthas_MightyForms::helloworld"
+             resource="Porthas_MightyForms::resource"
              action="porthas_mightyforms/forms"
         />
 

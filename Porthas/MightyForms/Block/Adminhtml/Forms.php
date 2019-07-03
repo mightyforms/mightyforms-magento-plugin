@@ -15,6 +15,10 @@ class Forms extends Template
         $this->_httpClientFactory = $httpClientFactory;
     }
 
+    /**
+     * @return string
+     * @throws \Zend_Http_Client_Exception
+     */
     public function getFormsList(){
 
         $apiKeyFromDb = Index::getUserApiKey();
