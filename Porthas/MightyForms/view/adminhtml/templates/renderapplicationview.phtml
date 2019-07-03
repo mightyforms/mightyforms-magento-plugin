@@ -13,11 +13,11 @@
                     let post = JSON.parse(rawData);
 
                     if ('userApiKey' === post.message) {
+
                         console.log('This is key:', post.data);
 
                         $.ajax({
                             method: "POST",
-                            showLoader: true,
                             url: '<?php echo $block->getUrl("porthas_mightyforms/apikey/index/");?>' + '?isAjax=true',
                             dataType: 'json',
                             data: {
@@ -29,11 +29,12 @@
                                 console.log("Data Saved: ", msg);
                             })
                             .error(function (msg) {
-                                console.log("Error: ", msg);
+                                throw new Exception(msg);
                             });
                     }
                 } catch (e) {
-                    console.error('Error occurred with postMessage', e);
+                    alert(`Error occurred in attempt to save API key to database. Please, contact with support of MightyForms. Message:  ${e}`);
+
                 }
             });
         });
@@ -42,4 +43,5 @@
 </script>
 
 
-<iframe src="https://app.mightyforms.com" id="mightyforms" style="width:100%; height: 100%;"  frameborder="0"></iframe>
+<!--<iframe src="https://app.mightyforms.com" id="mightyforms" style="width:100%; height: 100%;"  frameborder="0"></iframe>-->
+<iframe src="http://localhost:4200" id="mightyforms" style="width:100%; height: 100%;"  frameborder="0"></iframe>

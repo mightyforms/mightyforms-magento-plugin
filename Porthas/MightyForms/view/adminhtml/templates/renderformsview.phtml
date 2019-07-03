@@ -1,4 +1,3 @@
-
 <script>
     require([
         'jquery',
@@ -13,52 +12,57 @@
 
 <?php
 
-$forms_block = $block
-    ->getLayout()
-    ->createBlock('Porthas\MightyForms\Block\Adminhtml\Forms');
+    $forms_block = $block
+        ->getLayout()
+        ->createBlock('Porthas\MightyForms\Block\Adminhtml\Forms');
 
+    try {
+        $user_forms_json = $forms_block->getFormsList();
 
-$user_api_key = $forms_block->getUserApiKey();
+    } catch (Exception $e) {
 
-$user_forms_json = $forms_block->getFormsList($user_api_key);
+        echo '<h4>' . $e . '</h4>';
+    }
 
-$user_forms_array = json_decode($user_forms_json, true);
+    $user_forms_array = json_decode($user_forms_json, true);
 
-if (!$user_forms_array['success']) {
+    if (!$user_forms_array['success']) {
 
-    echo '<h4>Unknown error occurred </h4>';
+        echo '<h4> Error occurred. Message: ' . $user_forms_array['error'] . ' </h4>';
 
-} elseif (isset($user_forms_array) && $user_forms_array['success'] && count($user_forms_array['data']) < 1) {
+    } elseif (isset($user_forms_array) && $user_forms_array['success'] && count($user_forms_array['data']) < 1) {
 
-    echo '<h4>You have not created form yet </h4>';
+        echo '<h4>You have not created form yet </h4>';
 
-} else { ?>
+    } else { ?>
 
-    <table id="user_forms" class="display">
-        <thead>
-        <tr>
-            <td>Form name</td>
-            <td>Shortcode</td>
-            <td>Last editor</td>
-            <td>Last modified</td>
-        </tr>
-        <h3>Your forms and shortcodes.</h3>
-        <p>If you want to show your form in a page or post - just copy the form's shortcode and paste it into your
-            visual editor. That's it!</p>
-        </thead>
-        <tbody>
-
-        <?php foreach ($user_forms_array['data'] as $forms) { ?>
+        <table id="user_forms" class="display">
+            <thead>
             <tr>
-                <td><?= $forms['project_name'] ?></td>
-                <td> {{block class="Porthas\MightyForms\Block\EmbededBlock" name="render_form" form_id="<?php echo 'mf-' . $forms['project_id'];?>" template="Porthas_MightyForms::form.phtml"}}</td>
-                <td> <?= isset($forms['last_modified_username']) ? $forms['last_modified_username'] : '' ?></td>
-                <td> <?= isset($forms['last_modified']) ? $forms['last_modified'] : '' ?></td>
+                <td>Form name</td>
+                <td>Shortcode</td>
+                <td>Last editor</td>
+                <td>Last modified</td>
             </tr>
-        <?php } ?>
+            <h3>Your forms and shortcodes.</h3>
+            <p>If you want to show your form in a page or post - just copy the form's shortcode and paste it into your
+                visual editor. That's it!</p>
+            </thead>
+            <tbody>
 
-        </tbody>
-    </table>
+            <?php foreach ($user_forms_array['data'] as $forms) { ?>
+                <tr>
+                    <td><?= $forms['project_name'] ?></td>
+                    <td> {{block class="Porthas\MightyForms\Block\EmbededBlock" name="render_form"
+                        form_id="<?php echo 'mf-' . $forms['project_id']; ?>" template="Porthas_MightyForms::form.phtml"}}
+                    </td>
+                    <td> <?= isset($forms['last_modified_username']) ? $forms['last_modified_username'] : '' ?></td>
+                    <td> <?= isset($forms['last_modified']) ? $forms['last_modified'] : '' ?></td>
+                </tr>
+            <?php } ?>
+
+            </tbody>
+        </table>
 
 <?php } ?>
 

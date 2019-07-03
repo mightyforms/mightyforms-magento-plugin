@@ -26,13 +26,13 @@ class InstallSchema implements InstallSchemaInterface
                     'id',
                     Table::TYPE_INTEGER,
                     100,
-                        ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true]
+                        ['primary' => true, 'nullable' => false, 'default' => 1]
                     )
                 ->addColumn(
                     'api_key',
                     Table::TYPE_TEXT,
                     100,
-                    ['nullable' => false, 'default' => ''])
+                    ['nullable' => true, 'default' => null])
 
                 ->setOption('charset', 'utf8');
             $installer->getConnection()->createTable($table);
