@@ -1,11 +1,9 @@
 {
   "name": "porthas/mightyforms",
   "description": "Magento 2 MightyForms extension",
-  "require": {
-    "php": "~5.6.0|~7.0"
-  },
+  "require": {},
   "type": "magento2-module",
-  "version": "1.0",
+  "version": "1.0.0",
   "license": [
     "OSL-3.0",
     "AFL-3.0"
