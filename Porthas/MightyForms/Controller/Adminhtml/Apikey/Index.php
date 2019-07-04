@@ -42,7 +42,19 @@ class Index extends \Magento\Backend\App\Action
 
                 $connectionWithAttrs = self::getConnectionWithAttributes();
 
-                $sql = "UPDATE " . $connectionWithAttrs['table_name'] . " SET `api_key` = '" . $userApiKey . "' WHERE id = 1";
+                // Check is api key already exist. So, we need to decide insert new or update existing key.
+                $userApiKeyFromDd = self::getUserApiKey();
+
+                if($userApiKeyFromDd) {
+
+                    $sql = "UPDATE " . $connectionWithAttrs['table_name'] . " SET `api_key` = '" . $userApiKey . "' WHERE id = 1";
+
+                }else{
+
+                    $sql = "INSERT INTO " . $connectionWithAttrs['table_name'] . " (`id`, `api_key`) VALUES (1, '" . $userApiKey . "')";
+
+                }
+
                 $connectionWithAttrs['connection']->query($sql);
             }
         }

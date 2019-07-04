@@ -16,13 +16,7 @@
         ->getLayout()
         ->createBlock('Porthas\MightyForms\Block\Adminhtml\Forms');
 
-    try {
-        $user_forms_json = $forms_block->getFormsList();
-
-    } catch (Exception $e) {
-
-        echo '<h4>' . $e . '</h4>';
-    }
+    $user_forms_json = $forms_block->getFormsList();
 
     $user_forms_array = json_decode($user_forms_json, true);
 

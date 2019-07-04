@@ -21,19 +21,24 @@ class Forms extends Template
      */
     public function getFormsList(){
 
-        $apiKeyFromDb = Index::getUserApiKey();
+        try {
 
-        if ($apiKeyFromDb === false || strlen($apiKeyFromDb) < 16) {
-            throw new \Exception('Please, go to Application and sign in or sign up first');
+            $apiKeyFromDb = Index::getUserApiKey();
+
+            if ($apiKeyFromDb === false || strlen($apiKeyFromDb) < 16) {
+                throw new \Exception('Please, go to Application and sign in or sign up first');
+            }
+
+            $client = $this->_httpClientFactory->create();
+            $client->setUri('http://localhost:3000/api/v1/mf/' . $apiKeyFromDb . '/forms');
+            $client->setMethod(\Zend_Http_Client::GET);
+
+            $response = $client->request();
+
+            return $response->getBody();
+        }catch (\Exception $exception){
+            return '{"success":false, "error":"' . $exception->getMessage() . '"}';
         }
-
-        $client = $this->_httpClientFactory->create();
-        $client->setUri('https://app.mightyforms.com/api/v1/mf/' . $apiKeyFromDb . '/forms');
-        $client->setMethod(\Zend_Http_Client::GET);
-
-        $response = $client->request();
-
-        return $response->getBody();
     }
 
 }
