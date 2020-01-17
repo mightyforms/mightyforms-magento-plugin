@@ -13,8 +13,6 @@ class EmbeddedBlock extends \Magento\Framework\View\Element\Template
      */
     public function renderForm()
     {
-
-        phpinfo();
         return
             '<!-- MightyForms Section -->
                 <script src="https://form.mightyforms.com/loader/v1/mightyforms.min.js"></script>
