@@ -13,7 +13,12 @@ class EmbeddedBlock extends \Magento\Framework\View\Element\Template
      */
     public function renderForm()
     {
-        return '<!-- MightyForms Section -->
-        <div class="mighty-form" id="mf-' . $this->getData('form_id') . '"></div>';
+
+        phpinfo();
+        return
+            '<!-- MightyForms Section -->
+                <script src="https://form.mightyforms.com/loader/v1/mightyforms.min.js"></script>
+                <div class="mighty-form" id="mf-' . $this->getData('form_id') . '"></div>
+            <!-- MightyForms Section -->';
     }
 }

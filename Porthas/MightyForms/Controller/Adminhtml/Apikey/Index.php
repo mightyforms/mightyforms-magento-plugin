@@ -26,6 +26,7 @@ class Index extends \Magento\Backend\App\Action
         return ['connection' => $connection, 'table_name' => $tableName];
     }
 
+
     /** This functoin called from frontend via ajax,
      *  and pass api_key from iFrame (postMessage) to DB
      * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|void
@@ -63,7 +64,7 @@ class Index extends \Magento\Backend\App\Action
     /**
      * @return bool|mixed
      */
-    public static function getUserApiKey()
+    private static function getUserApiKey()
     {
         $connectionWithAttrs = self::getConnectionWithAttributes();
 

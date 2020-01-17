@@ -2,7 +2,7 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
         <title>MightyForms: Forms</title>
-        <link src="Porthas_MightyForms::css/jquery.dataTables.min.css"/>
+        <link type="text/css" src="Porthas_MightyForms::css/jquery.dataTables.min.css"/>
     </head>
 
         <referenceContainer name="content">
