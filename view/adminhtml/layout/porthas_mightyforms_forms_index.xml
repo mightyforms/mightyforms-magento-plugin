@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title>MightyForms: Forms</title>
+        <link type="text/css" src="Porthas_MightyForms::css/jquery.dataTables.min.css"/>
+    </head>
+
+        <referenceContainer name="content">
+            <block class="Magento\Backend\Block\Template" template="Porthas_MightyForms::renderformsview.phtml"/>
+        </referenceContainer>
+
+</page>
