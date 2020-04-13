@@ -2,36 +2,43 @@
     require([
         'jquery',
         'Porthas_MightyForms/js/dataTables.min'
-    ], function ($) {
+    ], function($) {
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             jQuery('#user_forms').DataTable();
         });
     });
 </script>
 
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MW39298');</script>
+<!-- End Google Tag Manager -->
+
+
 <?php
 
-    $forms_block = $block
-        ->getLayout()
-        ->createBlock('Porthas\MightyForms\Block\Adminhtml\Forms');
+$forms_block = $block
+    ->getLayout()
+    ->createBlock('Porthas\MightyForms\Block\Adminhtml\Forms');
 
-    $user_forms_json = $forms_block->getFormsList();
+$user_forms_json = $forms_block->getFormsList();
 
-    $user_forms_array = json_decode($user_forms_json, true);
+$user_forms_array = json_decode($user_forms_json, true);
 
-    if (!$user_forms_array['success']) {
+if (!$user_forms_array['success']) {
 
-        echo '<h4> Error occurred. Message: ' . $user_forms_array['error'] . ' </h4>';
+    echo '<h4> Error occurred. Message: ' . $user_forms_array['error'] . ' </h4>';
+} elseif (isset($user_forms_array) && $user_forms_array['success'] && count($user_forms_array['data']) < 1) {
 
-    } elseif (isset($user_forms_array) && $user_forms_array['success'] && count($user_forms_array['data']) < 1) {
+    echo '<h4>You have not created form yet </h4>';
+} else { ?>
 
-        echo '<h4>You have not created form yet </h4>';
-
-    } else { ?>
-
-        <table id="user_forms" class="display">
-            <thead>
+    <table id="user_forms" class="display">
+        <thead>
             <tr>
                 <td>Form name</td>
                 <td>Shortcode</td>
@@ -41,8 +48,8 @@
             <h3>Your forms and shortcodes.</h3>
             <p>If you want to show your form in a page or post - just copy the form's shortcode and paste it into your
                 visual editor. That's it!</p>
-            </thead>
-            <tbody>
+        </thead>
+        <tbody>
 
             <?php foreach ($user_forms_array['data'] as $forms) { ?>
                 <tr>
@@ -55,8 +62,7 @@
                 </tr>
             <?php } ?>
 
-            </tbody>
-        </table>
+        </tbody>
+    </table>
 
 <?php } ?>
-
