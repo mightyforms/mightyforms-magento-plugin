@@ -2,10 +2,10 @@
   "name": "mightyforms/mightyforms",
   "description": "Magento 2 MightyForms extension",
   "require": {
-    "php": "~7.0 || ~7.1 ||  ~7.2"
+    "php": "~7.0 || ~7.1 ||  ~7.2 || ~7.3 || ~7.4"
   },
   "type": "magento2-module",
-  "version": "1.0.5",
+  "version": "1.0.9",
   "license": [
     "OSL-3.0"
   ],

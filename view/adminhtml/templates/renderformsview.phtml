@@ -2,47 +2,101 @@
     require([
         'jquery',
         'Porthas_MightyForms/js/dataTables.min'
-    ], function ($) {
+    ], function($) {
 
-        $(document).ready(function () {
+        jQuery(document).ready(function() {
             jQuery('#user_forms').DataTable();
-        });
-    });
+
+
+
+            jQuery('#mf-table-header button').on('click', function(){
+
+            	let confirmDialog = confirm('Are you sure you want to remove the API key?');
+
+            	if(confirmDialog){
+					jQuery.ajax({
+		                method: "POST",
+		                url: '<?php echo $block->getUrl("porthas_mightyforms/apikey/index/"); ?>' + '?isAjax=true',
+		                dataType: 'json',
+		                data: {
+		                    apiKey: 'reconnect',
+		                    form_key: window.FORM_KEY
+		                }
+		            })
+		            .done(function(msg) {
+		                alert('API key was resetted. Now, you can go to Mightyforms -> Application, logout from your current account and sign in to another')
+		            })
+		            .error(function(msg) {
+		                throw new Error(msg);
+		            });
+		        }
+	   	 		
+          	});
+   		});
+
+   });
 </script>
+
+<style>
+
+#mf-table-header{
+	display: flex; justify-content: space-between; align-items: center;
+}
+
+#mf-table-header button{
+color: #fff; border: 0;padding: 6px 8px; border-radius: 3px; background-color: #dc3545; cursor: pointer; outline: none;
+}
+
+#mf-table-header button:hover{
+	background-color: #ca2a39;
+}
+
+</style>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MW39298');</script>
+<!-- End Google Tag Manager -->
+
 
 <?php
 
-    $forms_block = $block
-        ->getLayout()
-        ->createBlock('Porthas\MightyForms\Block\Adminhtml\Forms');
+$forms_block = $block
+    ->getLayout()
+    ->createBlock('Porthas\MightyForms\Block\Adminhtml\Forms');
 
-    $user_forms_json = $forms_block->getFormsList();
+$user_forms_json = $forms_block->getFormsList();
 
-    $user_forms_array = json_decode($user_forms_json, true);
+$user_forms_array = json_decode($user_forms_json, true);
 
-    if (!$user_forms_array['success']) {
+if (!$user_forms_array['success']) {
 
-        echo '<h4> Error occurred. Message: ' . $user_forms_array['error'] . ' </h4>';
+    echo '<h4> Error occurred. Message: ' . $user_forms_array['error'] . ' </h4>';
+} elseif (isset($user_forms_array) && $user_forms_array['success'] && count($user_forms_array['data']) < 1) {
 
-    } elseif (isset($user_forms_array) && $user_forms_array['success'] && count($user_forms_array['data']) < 1) {
+    echo '<h4>You have not created form yet </h4>';
+} else { ?>
 
-        echo '<h4>You have not created form yet </h4>';
-
-    } else { ?>
-
-        <table id="user_forms" class="display">
-            <thead>
+    <table id="user_forms" class="display">
+        <thead>
             <tr>
                 <td>Form name</td>
                 <td>Shortcode</td>
                 <td>Last editor</td>
                 <td>Last modified</td>
             </tr>
-            <h3>Your forms and shortcodes.</h3>
+            <div id="mf-table-header">
+            	<h3>Your forms and shortcodes.</h3>
+            	<button>Reconnect</button>
+            </div>
+
             <p>If you want to show your form in a page or post - just copy the form's shortcode and paste it into your
                 visual editor. That's it!</p>
-            </thead>
-            <tbody>
+        </thead>
+        <tbody>
 
             <?php foreach ($user_forms_array['data'] as $forms) { ?>
                 <tr>
@@ -55,8 +109,7 @@
                 </tr>
             <?php } ?>
 
-            </tbody>
-        </table>
+        </tbody>
+    </table>
 
 <?php } ?>
-
