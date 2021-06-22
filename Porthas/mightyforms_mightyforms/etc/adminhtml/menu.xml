@@ -2,19 +2,19 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
 
-        <add id="Porthas_MightyForms::MightyForms"
+        <add id="Porthas_MightyForms::root"
              title="MightyForms"
              module="Porthas_MightyForms"
              sortOrder="15"
-             resource="Porthas_MightyForms::resource"
+             resource="Porthas_MightyForms::root"
         />
 
         <add id="Porthas_MightyForms::application"
              title="Application"
              module="Porthas_MightyForms"
              sortOrder="9"
-             parent="Porthas_MightyForms::MightyForms"
-             resource="Porthas_MightyForms::resource"
+             parent="Porthas_MightyForms::root"
+             resource="Porthas_MightyForms::application"
              action="porthas_mightyforms/application"
         />
 
@@ -22,8 +22,8 @@
              title="Forms"
              module="Porthas_MightyForms"
              sortOrder="10"
-             parent="Porthas_MightyForms::MightyForms"
-             resource="Porthas_MightyForms::resource"
+             parent="Porthas_MightyForms::root"
+             resource="Porthas_MightyForms::forms"
              action="porthas_mightyforms/forms"
         />
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace Porthas\MightyForms\Block\Adminhtml;
 
 use Magento\Backend\Block\Template;
@@ -32,7 +33,11 @@ class Forms extends Template
         $result = $connectionWithAttrs['connection']
             ->fetchRow("SELECT `api_key` FROM `" . $connectionWithAttrs['table_name'] . "` WHERE id = 1");
 
-        return $result['api_key'] ? $result['api_key'] : false;
+        if (!$result) {
+            return false;
+        } else {
+            return $result['api_key'] ? $result['api_key'] : false;
+        }
     }
 
 
@@ -40,7 +45,8 @@ class Forms extends Template
      * @return string
      * @throws \Zend_Http_Client_Exception
      */
-    public function getFormsList(){
+    public function getFormsList()
+    {
 
         try {
 
@@ -57,9 +63,8 @@ class Forms extends Template
             $response = $client->request();
 
             return $response->getBody();
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             return '{"success":false, "error":"' . $exception->getMessage() . '"}';
         }
     }
-
 }

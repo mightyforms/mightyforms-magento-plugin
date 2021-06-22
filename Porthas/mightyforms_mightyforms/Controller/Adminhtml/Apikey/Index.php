@@ -71,7 +71,11 @@ class Index extends \Magento\Backend\App\Action
         $result = $connectionWithAttrs['connection']
             ->fetchRow("SELECT `api_key` FROM `" . $connectionWithAttrs['table_name'] . "` WHERE id = 1");
 
-        return $result['api_key'] ? $result['api_key'] : false;
+            if (!$result) {
+                return false;
+            } else {
+                return $result['api_key'] ? $result['api_key'] : false;
+            }
 
     }
 }
