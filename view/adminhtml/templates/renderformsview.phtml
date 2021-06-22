@@ -1,64 +1,96 @@
+<script src="https://browser.sentry-cdn.com/6.7.2/bundle.min.js" integrity="sha384-mH9XMETXlBjvLoIIA0do4C9E+wHcMwicM3W3ppIqBJvJq+ge8XBvyY6Of1GcSjIQ" crossorigin="anonymous"></script>
+
+<script>
+    Sentry.init({
+        dsn: "https://60e4bc6f7eaf46a0a4ff61e8a3081bd2@o245711.ingest.sentry.io/5828381",
+        release: "Magento2",
+        integrations: [new Sentry.Integrations.BrowserTracing()],
+        tracesSampleRate: 1.0,
+    });
+</script>
+
 <script>
     require([
         'jquery',
         'Porthas_MightyForms/js/dataTables.min'
     ], function($) {
 
-        jQuery(document).ready(function() {
-            jQuery('#user_forms').DataTable();
+        try {
+
+            jQuery(document).ready(function() {
+                jQuery('#user_forms').DataTable();
 
 
 
-            jQuery('#mf-table-header button').on('click', function(){
+                jQuery('#mf-table-header button').on('click', function() {
 
-            	let confirmDialog = confirm('Are you sure you want to remove the API key?');
+                    let confirmDialog = confirm('Are you sure you want to remove the API key?');
 
-            	if(confirmDialog){
-					jQuery.ajax({
-		                method: "POST",
-		                url: '<?php echo $block->getUrl("porthas_mightyforms/apikey/index/"); ?>' + '?isAjax=true',
-		                dataType: 'json',
-		                data: {
-		                    apiKey: 'reconnect',
-		                    form_key: window.FORM_KEY
-		                }
-		            })
-		            .done(function(msg) {
-		                alert('API key was resetted. Now, you can go to Mightyforms -> Application, logout from your current account and sign in to another')
-		            })
-		            .error(function(msg) {
-		                throw new Error(msg);
-		            });
-		        }
-	   	 		
-          	});
-   		});
+                    if (confirmDialog) {
+                        jQuery.ajax({
+                                method: "POST",
+                                url: '<?php echo $block->getUrl("porthas_mightyforms/apikey/index/"); ?>' + '?isAjax=true',
+                                dataType: 'json',
+                                data: {
+                                    apiKey: 'reconnect',
+                                    form_key: window.FORM_KEY
+                                }
+                            })
+                            .done(function(msg) {
+                                alert('API key was resetted. Now, you can go to Mightyforms -> Application, logout from your current account and sign in to another')
+                            })
+                            .error(function(msg) {
+                                throw new Error(msg);
+                            });
+                    }
 
-   });
+                });
+            });
+        } catch (error) {
+            Sentry.captureException(error);
+        }
+    });
 </script>
 
 <style>
+    #mf-table-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-#mf-table-header{
-	display: flex; justify-content: space-between; align-items: center;
-}
+    #mf-table-header button {
+        color: #fff;
+        border: 0;
+        padding: 6px 8px;
+        border-radius: 3px;
+        background-color: #dc3545;
+        cursor: pointer;
+        outline: none;
+    }
 
-#mf-table-header button{
-color: #fff; border: 0;padding: 6px 8px; border-radius: 3px; background-color: #dc3545; cursor: pointer; outline: none;
-}
-
-#mf-table-header button:hover{
-	background-color: #ca2a39;
-}
-
+    #mf-table-header button:hover {
+        background-color: #ca2a39;
+    }
 </style>
 
 <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MW39298');</script>
+<script>
+    (function(w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+            'gtm.start': new Date().getTime(),
+            event: 'gtm.js'
+        });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src =
+            'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-MW39298');
+</script>
 <!-- End Google Tag Manager -->
 
 
@@ -89,8 +121,8 @@ if (!$user_forms_array['success']) {
                 <td>Last modified</td>
             </tr>
             <div id="mf-table-header">
-            	<h3>Your forms and shortcodes.</h3>
-            	<button>Reconnect</button>
+                <h3>Your forms and shortcodes.</h3>
+                <button>Reconnect</button>
             </div>
 
             <p>If you want to show your form in a page or post - just copy the form's shortcode and paste it into your

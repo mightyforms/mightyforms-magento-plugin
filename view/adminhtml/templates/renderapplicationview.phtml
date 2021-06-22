@@ -1,50 +1,76 @@
+<script src="https://browser.sentry-cdn.com/6.7.2/bundle.min.js" integrity="sha384-mH9XMETXlBjvLoIIA0do4C9E+wHcMwicM3W3ppIqBJvJq+ge8XBvyY6Of1GcSjIQ" crossorigin="anonymous"></script>
+
+<script>
+    Sentry.init({
+        dsn: "https://60e4bc6f7eaf46a0a4ff61e8a3081bd2@o245711.ingest.sentry.io/5828381",
+        release: "Magento2",
+        integrations: [new Sentry.Integrations.BrowserTracing()],
+        tracesSampleRate: 1.0,
+    });
+</script>
+
 <script>
     require(['jquery', 'mage/url'], function($) {
         $(document).ready(function() {
 
-            $(window).on('message', function(e) {
+            try {
+                $(window).on('message', function(e) {
 
-                let rawData = e.originalEvent.data;
+                    let rawData = e.originalEvent.data;
 
-                try {
-                    if (typeof rawData !== 'string') return;
+                    try {
+                        if (typeof rawData !== 'string') return;
 
-                    let post = JSON.parse(rawData);
+                        let post = JSON.parse(rawData);
 
-                    if ('userApiKey' === post.message) {
+                        if ('userApiKey' === post.message) {
 
-                        console.log('This is key:', post.data);
+                            console.log('This is key:', post.data);
 
-                        $.ajax({
-                                method: "POST",
-                                url: '<?php echo $block->getUrl("porthas_mightyforms/apikey/index/"); ?>' + '?isAjax=true',
-                                dataType: 'json',
-                                data: {
-                                    apiKey: post.data,
-                                    form_key: window.FORM_KEY
-                                }
-                            })
-                            .done(function(msg) {
-                                console.log("Data Saved: ", msg);
-                            })
-                            .error(function(msg) {
-                                throw new Exception(msg);
-                            });
+                            $.ajax({
+                                    method: "POST",
+                                    url: '<?php echo $block->getUrl("porthas_mightyforms/apikey/index/"); ?>' + '?isAjax=true',
+                                    dataType: 'json',
+                                    data: {
+                                        apiKey: post.data,
+                                        form_key: window.FORM_KEY
+                                    }
+                                })
+                                .done(function(msg) {
+                                    console.log("Data Saved: ", msg);
+                                })
+                                .error(function(msg) {
+                                    throw new Exception(msg);
+                                });
+                        }
+                    } catch (e) {
+                        throw `Error occurred in attempt to save API key to database. Please, contact with support of MightyForms. Message:  ${JSON.stringify(e)}`;
                     }
-                } catch (e) {
-                    console.log(`Error occurred in attempt to save API key to database. Please, contact with support of MightyForms. Message:  ${JSON.stringify(e)}`);
-                }
-            });
+                });
+            } catch (error) {
+                Sentry.captureException(error);
+            }
         });
     });
 </script>
 
 <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MW39298');</script>
+<script>
+    (function(w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+            'gtm.start': new Date().getTime(),
+            event: 'gtm.js'
+        });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src =
+            'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-MW39298');
+</script>
 <!-- End Google Tag Manager -->
 
 

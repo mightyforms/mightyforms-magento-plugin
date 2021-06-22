@@ -5,7 +5,7 @@
 
 
             <resource id="Magento_Backend::admin">
-                <resource id="Porthas_MightyForms::root" title="MightyForms" sortOrder="51">
+                <resource id="Porthas_MightyForms::MightyForms" title="MightyForms" sortOrder="51">
                     <resource id="Porthas_MightyForms::application" title="Application" sortOrder="10"/>
                     <resource id="Porthas_MightyForms::forms" title="Forms" sortOrder="11" />
                 </resource>
