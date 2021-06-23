@@ -72,6 +72,13 @@
     #mf-table-header button:hover {
         background-color: #ca2a39;
     }
+
+    .mf-warning {
+        border: 1px solid orange;
+        padding: 10px;
+        background: #ff8d001f;
+        border-radius: 4px;
+    }
 </style>
 
 <!-- Google Tag Manager -->
@@ -106,10 +113,12 @@ $user_forms_array = json_decode($user_forms_json, true);
 
 if (!$user_forms_array['success']) {
 
-    echo '<h4> Error occurred. Message: ' . $user_forms_array['error'] . ' </h4>';
+    echo '<h4 class="mf-warning">
+    You need to create at least one form in order to be able to embed them on the site.
+    To do this, go to the "Application" tab or visit the <a href="https://app.mightyforms.com" target="_blank">application website</a></h4>';
 } elseif (isset($user_forms_array) && $user_forms_array['success'] && count($user_forms_array['data']) < 1) {
 
-    echo '<h4>You have not created form yet </h4>';
+    echo '<h4 class="mf-warning">You have not created form yet </h4>';
 } else { ?>
 
     <table id="user_forms" class="display">
